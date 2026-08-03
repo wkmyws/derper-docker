@@ -35,7 +35,7 @@ jobs:
 
       - name: Check if the image exists
         run: |
-          GHCR_TOKEN=$(echo ${{ secrets.GITHUB_TOKEN }} | base64)
+          GHCR_TOKEN=$(printf "%s" "${{ secrets.GITHUB_TOKEN }}" | base64 -w 0)
           HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
             -H "Authorization: Bearer $GHCR_TOKEN" \
             https://ghcr.io/v2/${{ github.repository }}/manifests/${{ env.TAILSCALE_VERSION }}
